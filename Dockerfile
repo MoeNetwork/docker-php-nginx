@@ -8,9 +8,10 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
     php7-mbstring php7-gd php7-bcmath php7-tokenizer php7-fileinfo php7-xmlwriter \
     php7-mysqlnd php7-pdo php7-pdo_mysql php7-pecl-redis php7-pecl-mongodb \
     composer nginx supervisor curl nodejs yarn
- 
+
 # Configure nginx
-COPY config/nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx.conf /config/nginx.conf
+RUN ln -sf config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
 COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
@@ -41,5 +42,5 @@ EXPOSE 8080
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-# Configure a healthcheck to validate that everything is up&running
+# Configure a healthcheck to validate that everything is up & running
 HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:8080/fpm-ping
