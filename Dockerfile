@@ -11,7 +11,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
 
 # Configure nginx
 COPY config/nginx.conf /config/nginx.conf
-RUN ln -sf config/nginx.conf /etc/nginx/nginx.conf
+RUN ln -sf /config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
 COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
